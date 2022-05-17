@@ -1,4 +1,8 @@
-# .gitignore file, for scala and sbt
+# .gitignore file, for:
+# - scala 
+# - sbt
+# - metals
+
 # --- BEGIN SCALA ---
 *.class
 *.log
@@ -20,3 +24,9 @@ project/plugins/project/
 .cache
 .lib/
 
+# --- BEGIN METALS ---
+# Generated Metals (Scala Language Server) files
+# Reference: https://scalameta.org/metals/
+.metals/
+.bloop/
+project/metals.sbt
