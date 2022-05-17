@@ -2,7 +2,7 @@ WTF is sbt ?
 
 simple build tool. supposedly a general-purpose build tool.
 
-But I've heard it's only used in the JVM environment, say scala and java, maybe kotline ? 
+But I've heard it's only used in the JVM environment, say scala and java, maybe kotlin ? 
 
 
 I'm reading this guide: 
