@@ -41,12 +41,30 @@ object Lists:
    */
   def max(xs: List[Int]): Int = {
 
-    if xs.isEmpty then throw java.util.NoSuchElementException("Lists.max() CANNOT be empty.") else if xs.length <= 2 then 
-    if xs.head <  ( try { xs.tail.head } catch { case e: java.util.NoSuchElementException => xs.head - 1 } ) then xs.tail.head else xs.head 
-      else
-        max ( List( xs.head, max(xs.tail) ) )
-      //1
-      //
+    xs.isEmpty match {
+      case true => throw java.util.NoSuchElementException("Lists.max() CANNNOT be empty!!!!!")
+      case false => 0
+      //case selse =>
+    }
+
+    xs.tail match {
+      case Nil => xs.head
+      case other => {
+        xs.tail.tail match {
+          case Nil => if xs.head < xs.tail.head then xs.tail.head else xs.head
+          case other => max ( List(xs.head, max(xs.tail) ) )
+
+        }
+      }
+
+    }
+
+//    if xs.isEmpty then throw java.util.NoSuchElementException("Lists.max() CANNOT be empty.") else if xs.tail.tail.isEmpty then 
+//    if xs.head <  ( try { xs.tail.head } catch { case e: java.util.NoSuchElementException => xs.head - 1 } ) then xs.tail.head else xs.head 
+//      else
+//        max ( List( xs.head, max(xs.tail) ) )
+//      //1
+//      //
         
         //xs.head < xs.tail.head then xs.tail.head else max(xs)
 
