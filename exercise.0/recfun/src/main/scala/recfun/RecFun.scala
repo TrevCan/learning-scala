@@ -3,6 +3,8 @@ import scala.util.control.Breaks._
 
 object RecFun extends RecFunInterface:
 
+  val DEBUG_T: Boolean = false
+
   def main(args: Array[String]): Unit =
     println("Pascal's Triangle")
     for row <- 0 to 10 do
@@ -78,22 +80,31 @@ The following pattern of numbers is called Pascal's triangle.
    *
    */
   def balance(chars: List[Char]): Boolean = {
+    def balanceReal( parths: List[Char], opened: Int): Int = 
+      debug(s"CHAR IS: '${parths.head}'")
+      var countOpenParentheses: Int = opened
+      debug(s"OPENED IS: '$countOpenParentheses")
+      if countOpenParentheses < 0 then
+        countOpenParentheses
+      else
+        if parths.head == '(' then 
+          if ! parths.tail.isEmpty then
+            countOpenParentheses = balanceReal( parths.tail, countOpenParentheses + 1 )
+          else countOpenParentheses = countOpenParentheses + 1
+        else 
+          if ! parths.tail.isEmpty then
+            countOpenParentheses = balanceReal( parths.tail, countOpenParentheses - 1 )
+          else countOpenParentheses = countOpenParentheses - 1
 
+      debug(s"  I RETURN: $countOpenParentheses")
+      countOpenParentheses
+      
     val charsOnlyParths = chars.filter( char => char == '(' || char == ')' ).toList
+    debug(s"only parentheses: ${charsOnlyParths.mkString}")
 
-    var index = 0;
-    var countOpenParentheses = 0;
-
-    breakable{
-    for ( c <- charsOnlyParths )
-      if c == '(' then countOpenParentheses = countOpenParentheses + 1
-      else if countOpenParentheses == 0 then 
-        countOpenParentheses = countOpenParentheses - 1
-        break()
-      else countOpenParentheses = countOpenParentheses - 1
-      //println(c)
-    }
-    return countOpenParentheses.equals(0)
+    val output: Int = balanceReal(charsOnlyParths, 0)
+    debug(s" return is $output")
+    output.equals(0)
 
   }
 
@@ -101,3 +112,12 @@ The following pattern of numbers is called Pascal's triangle.
    * Exercise 3
    */
   def countChange(money: Int, coins: List[Int]): Int = ???
+
+
+
+
+  // my debug function, only works when constants DEBUG_T is true,
+  // else it won't do anything.
+  def debug( message: String) = if DEBUG_T then println(message) else Nil
+
+
