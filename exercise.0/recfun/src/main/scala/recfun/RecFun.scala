@@ -110,38 +110,27 @@ The following pattern of numbers is called Pascal's triangle.
 
   /**
    * Exercise 3
+   * Exercise 3: Counting Change
+   * Write a recursive function that counts how many different ways you can 
+   * make change for an amount, given a list of coin denominations. For 
+   * example, there are 3 ways to give change for 4 if you have coins with 
+   * denomination 1 and 2: 1+1+1+1, 1+1+2, 2+2.
+   *
+   * Do this exercise by implementing the countChange function in 
+   * RecFun.scala. This function takes an amount to change, and a list of 
+   * unique denominations for the coins. Its signature is as follows:
+   *
+   * def countChange(money: Int, coins: List[Int]): Int
+   *
+   * Once again, you can make use of functions isEmpty, head and tail on the 
+   * list of integers coins.
+   *
+   * Hint: Think of the degenerate cases. How many ways can you give change 
+   * for 0 dollars? How many ways can you give change for >0 dollars, if you 
+   * have no coins?
    */
   def countChange(money: Int, coins: List[Int]): Int = 
     var totalCombinations = 0
-    val equalMoneyCoin = coins.filter( coin => coin.equals(money) )
-    // totalCombinations += equalMoneyCoin
-    val validCoins = coins
-    debug(s"no-repeated: $validCoins" )
-    debug(s"equalMoney: $equalMoneyCoin" )
-
-    
-    for ( coin <- validCoins ) do
-      debug(s"current coin is $coin")
-      var currentCombinations = 0
-      totalCombinations = 0
-      if ! validCoins.isEmpty then
-        var currentCoinSum = 0 
-        while currentCoinSum < money do
-          validCoins.foreach(p => {
-            if (currentCoinSum+p)<=money then currentCoinSum = currentCoinSum + p 
-          } ) 
-          if currentCoinSum == money then 
-            currentCombinations = currentCombinations + 1
-          debug("whiiile")
-
-      totalCombinations = totalCombinations + currentCombinations
-    
-    debug(s"totalCombinations is: $totalCombinations")
-
-    //if ! equalMoneyCoin.isEmpty then
-    //  equalMoneyCoin.head
-    //else 
-    //  0
     
     totalCombinations
 
