@@ -3,7 +3,7 @@ import scala.util.control.Breaks._
 
 object RecFun extends RecFunInterface:
 
-  val DEBUG_T: Boolean = false
+  val DEBUG_T: Boolean = true
 
   def main(args: Array[String]): Unit =
     println("Pascal's Triangle")
@@ -111,7 +111,39 @@ The following pattern of numbers is called Pascal's triangle.
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = 
+    var totalCombinations = 0
+    val equalMoneyCoin = coins.filter( coin => coin.equals(money) )
+    // totalCombinations += equalMoneyCoin
+    val validCoins = coins
+    debug(s"no-repeated: $validCoins" )
+    debug(s"equalMoney: $equalMoneyCoin" )
+
+    
+    for ( coin <- validCoins ) do
+      debug(s"current coin is $coin")
+      var currentCombinations = 0
+      totalCombinations = 0
+      if ! validCoins.isEmpty then
+        var currentCoinSum = 0 
+        while currentCoinSum < money do
+          validCoins.foreach(p => {
+            if (currentCoinSum+p)<=money then currentCoinSum = currentCoinSum + p 
+          } ) 
+          if currentCoinSum == money then 
+            currentCombinations = currentCombinations + 1
+          debug("whiiile")
+
+      totalCombinations = totalCombinations + currentCombinations
+    
+    debug(s"totalCombinations is: $totalCombinations")
+
+    //if ! equalMoneyCoin.isEmpty then
+    //  equalMoneyCoin.head
+    //else 
+    //  0
+    
+    totalCombinations
 
 
 
