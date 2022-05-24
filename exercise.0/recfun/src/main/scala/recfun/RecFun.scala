@@ -130,9 +130,40 @@ The following pattern of numbers is called Pascal's triangle.
    * have no coins?
    */
   def countChange(money: Int, coins: List[Int]): Int = 
-    var totalCombinations = 0
-    
-    totalCombinations
+    // divide recursive function into smaller problems. 
+  //
+  // first problem: 
+  // " how many times does x exactly fit into y ? " 
+  //
+  // in this analogy, x is the coin, y is the total money.
+  // the first problem is contained within the below if statement
+  // the function ONLY works when 
+  //    the coins list length is equal to exactly one (1)
+  //    the first coin is greater than zero. 
+  //      because negative money doesn't exist in our function
+  //      and division by zero breaks it, because... well... maths!
+  // 
+  // otherwise we'd like to execute
+  // this (recursive) function as expected.
+  //
+    if coins.length == 1  then { if coins.head > 0 then {
+
+      val firstCoin = coins.head
+      val quotient = money / firstCoin
+      val residue = money % firstCoin
+      if quotient > 0 && residue == 0 then
+        1
+      else 0 
+    } else 0  } 
+    else {
+      var totalCombinations = 0
+      for ( oneCoin <- coins ) {
+        totalCombinations = totalCombinations + countChange(money, List(oneCoin) )
+      }
+
+      totalCombinations
+
+    }
 
 
 
