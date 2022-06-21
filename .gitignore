@@ -30,3 +30,7 @@ project/plugins/project/
 .metals/
 .bloop/
 project/metals.sbt
+
+# --- BEGIN BSP ---
+# build server protocol stuff
+.bsp/
