@@ -146,19 +146,46 @@ The following pattern of numbers is called Pascal's triangle.
   // otherwise we'd like to execute
   // this (recursive) function as expected.
   //
-    if coins.length == 1  then { if coins.head > 0 then {
+    if money == 0 then {
+      1
+      // because you can only return change for 'nothing' in one way.
+    }
+    else if coins.isEmpty then {
+      0
+      // because you can't give change at all if you ain't got no change.
+    }
+    else if coins.length == 1 && coins.head > 0 then {
 
       val firstCoin = coins.head
       val quotient = money / firstCoin
       val residue = money % firstCoin
       if quotient > 0 && residue == 0 then
         1
-      else 0 
-    } else 0  } 
+      else 0
+    } 
+    else if coins.length == 1 && coins.head == 0 then {
+      0
+    }
     else {
       var totalCombinations = 0
-      for ( oneCoin <- coins ) {
+      var newtail: List[Int]  = coins
+      var oneCoin = newtail.head
+      debug(s"one coin is $oneCoin")
+      while ( ! newtail.isEmpty ) {
+        oneCoin = newtail.head
         totalCombinations = totalCombinations + countChange(money, List(oneCoin) )
+        var currentSum = 0 + oneCoin
+        var target = money 
+        var currentList = newtail.tail
+        while ( ! currentList.isEmpty ) {
+          if currentSum == target then
+            totalCombinations = 0
+          else
+            currentSum = currentSum + 0
+
+        }
+        newtail = newtail.tail
+        
       }
 
       totalCombinations
