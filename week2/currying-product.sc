@@ -25,4 +25,15 @@ def productNew ( fx: Int => Int ) = intervalCombine( 1, fx, (a,b)=> a*b )
 
 def sum ( fx: Int => Int ) = intervalCombine(0, fx, (a,b) => a+b )
 
+// mapReduce without recur function
+// this is the same as intervalCombine
+def mapReduce( f: Int => Int, combine: (Int, Int) => Int, zero: Int)(a: Int, b: Int): Int = 
+    if a > b then zero
+    else combine( f(a), mapReduce(f, combine, zero)(a+1, b))
 
+// mapReduce verbose copy from Lecture 2.2 - Currying
+def mapReduceMod( f: Int => Int, combine: (Int, Int) => Int, zero: Int)(a: Int, b: Int): Int = 
+    def recur(a: Int): Int = 
+        if a > b then zero
+        else combine( f(a), recur(a+1))
+    recur(a)
