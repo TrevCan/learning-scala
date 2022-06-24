@@ -38,6 +38,14 @@ class FunSetSuite extends munit.FunSuite:
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
 
+    def allpositives: FunSet =
+      (x: Int) => x > 0
+
+    def allnegatives: FunSet = 
+      (x: Int) => x < 0
+
+
+
   /**
    * This test is currently disabled (by using @Ignore) because the method
    * "singletonSet" is not yet implemented and the test would fail.
@@ -67,6 +75,31 @@ class FunSetSuite extends munit.FunSuite:
       assert(contains(s, 1), "Union 1")
       assert(contains(s, 2), "Union 2")
       assert(!contains(s, 3), "Union 3")
+  }
+
+  test("forall computes for itself"){
+    new TestSets:
+      assert(forall(s1, s1), "singleton 1")
+      assert(forall(s2, s2), "singleton 2")
+      assert(forall(s3, s3), "singleton 3")
+
+
+      assert(forall(allpositives, allpositives), "positives contain all positives")
+      assert(forall(allnegatives, allnegatives), "negatives contain all negatives")
+      assert(!forall(allnegatives, allpositives), "NEgatives do not contain positives")
+      assert(!forall(allpositives, allnegatives), "POsitives do not contain negatives")
+    
+  }
+
+  test("constant checking positives and negatives"){
+
+    new TestSets:
+      assert(!contains(allpositives, -99), "POsitives does not contain -99")
+      assert(!contains(allnegatives,  99), "NEgatives does not contain  99")
+
+      assert(contains(allpositives,  1000), "POsitives does contain     1000")
+      assert(contains(allnegatives, -1000), "NEgatives does contain    -1000")
+
   }
 
 
