@@ -63,12 +63,17 @@ trait FunSets extends FunSetsInterface:
    * Returns whether all bounded integers within `s` satisfy `p`.
    */
   def forall(s: FunSet, p: Int => Boolean): Boolean =
+    var count = 0
     def iter(a: Int): Boolean =
       if a == 1000 then
-        println(a)
-        println("exiting...!")
-        if contains(s, a) then p(a) else true
+        //println(a)
+        //println("exiting...!")
+        if contains(s, a) then p(a) 
+        else if count == bound*2 then false
+        else true
+        end if
       else if ! contains(s, a) then
+        count = count + 1
         iter(a+1)
       else
         p(a) && iter(a+1)
@@ -79,14 +84,16 @@ trait FunSets extends FunSetsInterface:
    * that satisfies `p`.
    */
   def exists(s: FunSet, p: Int => Boolean): Boolean = 
-    println(printSet(filter(s,p)))
+    //println(printSet(filter(s,p)))
     forall(filter(s, p), p)
 
 
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-  def map(s: FunSet, f: Int => Int): FunSet = ???
+  def map(s: FunSet, f: Int => Int): FunSet = 
+    (thenumber: Int) => 
+      exists(s, (p: Int) => f(p)==thenumber )
 
   /**
    * Displays the contents of a set
