@@ -96,6 +96,7 @@ trait Huffman extends HuffmanInterface:
    */
   def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = 
     if freqs.length == 1 then List( Leaf( freqs(0)._1, freqs(0)._2 ) )
+    else if freqs.isEmpty then List()
     else 
       def getLowest( fr: List[(Char, Int)]) = fr.find( (char, freq) => 
           fr.forall( (c, f) => f >= freq ) ).toList(0)
@@ -158,7 +159,7 @@ trait Huffman extends HuffmanInterface:
    * frequencies from that text and creates a code tree based on them.
    */
   def createCodeTree(chars: List[Char]): CodeTree = 
-    val thelist = makeOrderedLeafList( times(chars) )
+    val thelist = makeOrderedLeafList( times(chars) ).reverse
     until(singleton, combine  )(thelist)(0)
 
 
@@ -177,19 +178,20 @@ trait Huffman extends HuffmanInterface:
     while( ix <= (bits.length - 1) )
     do
       val singleBit = bits(ix)
-      //println(s"bit is.. $singleBit")
-      //println(s"currTree is.. $currTree")
+      println(s"bit is.. $singleBit")
+      println(s"currTree is.. $currTree")
       currTree match
         case Fork(l, r, chars, freq) =>
-          //println("FFF")
+          println("FFF")
           if singleBit == 0 then currTree = l
           else currTree = r
-          //println(s"FFF newTree is... $currTree")
+          println(s"FFF newTree is... $currTree")
           ix = ix -1
         case Leaf( char, freq ) =>
-          //println("LLL")
+          println("LLL")
           currTree = tree
           result = result + char
+          println(s"char is ... $char")
 
       ix = ix + 1
 
@@ -296,10 +298,10 @@ trait Huffman extends HuffmanInterface:
   def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = 
   
     val table: CodeTable = convert(tree)
-    val e: List[Bit] = text.map( (f: Char)=> 
+    val e = text.map( (f: Char)=> 
       table.find( (char, bits) => char.equals(f) ).toList(0)._2
     )
-    e 
+    e.flatten
     
     
 
